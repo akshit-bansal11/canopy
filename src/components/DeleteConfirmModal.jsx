@@ -1,6 +1,12 @@
 import React from 'react';
 
-function DeleteConfirmModal({ isOpen, onClose, onConfirm }) {
+function DeleteConfirmModal({
+    isOpen,
+    onClose,
+    onConfirm,
+    title = "Confirm Deletion",
+    description = "Are you sure you want to remove this bookmark? This action cannot be undone and the data will be lost."
+}) {
     if (!isOpen) return null;
 
     return (
@@ -25,10 +31,10 @@ function DeleteConfirmModal({ isOpen, onClose, onConfirm }) {
                         </div>
                         <div>
                             <h3 className="text-sm font-bold text-zinc-100 uppercase tracking-wide">
-                                Confirm Deletion
+                                {title}
                             </h3>
                             <p className="mt-2 text-sm text-zinc-400">
-                                Are you sure you want to remove this bookmark? This action cannot be undone and the data will be lost.
+                                {description}
                             </p>
                         </div>
                     </div>
