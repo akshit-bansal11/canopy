@@ -17,9 +17,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase services
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+export { db, auth, googleProvider };
 
 // Initiates the Google Sign-In process using a popup.
 export const signInWithGoogle = async () => {

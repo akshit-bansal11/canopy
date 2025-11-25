@@ -5,6 +5,7 @@ import BookmarkGrid from './BookmarkGrid.jsx';
 import TagFilter from './TagFilter.jsx';
 import DeleteConfirmModal from './DeleteConfirmModal.jsx';
 import Toast from './Toast.jsx';
+import SearchSortBar from './SearchSortBar.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { db } from '../firebase';
 import { normalizeUrl, getDomainFromUrl } from '../utils';
@@ -25,6 +26,8 @@ function AuthenticatedApp() {
     // 🔁 Bookmarks now come from Firestore
     const [bookmarks, setBookmarks] = useState([]);
     const [activeTags, setActiveTags] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortOrder, setSortOrder] = useState('date-desc');
 
     // -- Modal State --
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -210,16 +213,38 @@ function AuthenticatedApp() {
     }, [bookmarks]);
 
     const filteredBookmarks = useMemo(() => {
-        return bookmarks.filter((b) => {
-            if (
-                activeTags.length > 0 &&
-                !activeTags.every((t) => (b.tags || []).includes(t))
-            ) {
-                return false;
+        let result = bookmarks;
+
+        // 1. Filter by Tags
+        if (activeTags.length > 0) {
+            result = result.filter(b => activeTags.every(t => (b.tags || []).includes(t)));
+        }
+
+        // 2. Filter by Search
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(b =>
+                (b.title || '').toLowerCase().includes(query) ||
+                (b.url || '').toLowerCase().includes(query) ||
+                (b.description || '').toLowerCase().includes(query)
+            );
+        }
+
+        // 3. Sort
+        return [...result].sort((a, b) => {
+            switch (sortOrder) {
+                case 'alpha-asc':
+                    return (a.title || '').localeCompare(b.title || '');
+                case 'alpha-desc':
+                    return (b.title || '').localeCompare(a.title || '');
+                case 'date-asc':
+                    return (a.createdAt || 0) - (b.createdAt || 0);
+                case 'date-desc':
+                default:
+                    return (b.createdAt || 0) - (a.createdAt || 0);
             }
-            return true;
         });
-    }, [bookmarks, activeTags]);
+    }, [bookmarks, activeTags, searchQuery, sortOrder]);
 
     const toggleTag = (tag) => {
         setActiveTags((prev) =>
@@ -269,6 +294,12 @@ function AuthenticatedApp() {
                                         Syncing bookmarks from the cloud…
                                     </div>
                                 )}
+                                <SearchSortBar
+                                    searchQuery={searchQuery}
+                                    onSearchChange={setSearchQuery}
+                                    sortOrder={sortOrder}
+                                    onSortChange={setSortOrder}
+                                />
                                 <BookmarkGrid
                                     bookmarks={filteredBookmarks}
                                     onDelete={requestDelete}
