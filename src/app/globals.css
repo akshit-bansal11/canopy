@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:root {
+    zoom: 125%;
+}
+
+/* 1. MODE DEFINITIONS (Base Colors) */
+
+/* Global Light Mode Defaults */
+[data-mode="light"] {
+    --bg-main: hsl(0 0% 100%);
+    --bg-card: hsl(240 5% 96%);
+    --bg-hover: hsl(240 5% 90%);
+    --text-main: hsl(240 10% 3.9%);
+    --text-muted: hsl(240 3.8% 46.1%);
+    --border-main: hsl(240 5.9% 90%);
+    --accent-bg: hsla(var(--accent-hsl), 0.1);
+    --selection-bg: hsla(var(--accent-hsl), 0.2);
+    --selection-text: hsl(240 10% 3.9%);
+}
+
+/* Global Dark Mode Defaults */
+[data-mode="dark"] {
+    --bg-main: hsl(240 10% 3.9%);
+    --bg-card: hsl(240 5.9% 10%);
+    --bg-hover: hsl(240 4.8% 14.5%);
+    --text-main: hsl(0 0% 98%);
+    --text-muted: hsl(240 5% 64.9%);
+    --border-main: hsl(240 3.7% 15.9%);
+    --accent-bg: hsla(var(--accent-hsl), 0.15);
+    --selection-bg: hsla(var(--accent-hsl), 0.3);
+    --selection-text: hsl(0 0% 98%);
+}
+
+/* 2. THEME DEFINITIONS (Accent Colors) */
+
+[data-theme="neutral"] {
+    --accent-hsl: 240, 5%, 64.9%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(240 5% 80%);
+}
+
+[data-theme="indigo"] {
+    --accent-hsl: 239, 84%, 67%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(239 84% 75%);
+}
+
+[data-theme="midnight"] {
+    --accent-hsl: 188, 91%, 43%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(188 91% 53%);
+}
+
+[data-theme="forest"] {
+    --accent-hsl: 158, 64%, 52%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(158 64% 62%);
+}
+
+[data-theme="sunset"] {
+    --accent-hsl: 351, 95%, 71%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(351 95% 81%);
+}
+
+[data-theme="nebula"] {
+    --accent-hsl: 270, 95%, 85%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(270 95% 92%);
+}
+
+[data-theme="blue"] {
+    --accent-hsl: 217, 91%, 60%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(217 91% 70%);
+}
+
+[data-theme="amber"] {
+    --accent-hsl: 38, 92%, 50%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(38 92% 60%);
+}
+
+[data-theme="teal"] {
+    --accent-hsl: 173, 80%, 40%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(173 80% 50%);
+}
+
+[data-theme="rose"] {
+    --accent-hsl: 347, 77%, 50%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(347 77% 60%);
+}
+
+[data-theme="cyber"] {
+    --accent-hsl: 120, 100%, 50%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(120 100% 60%);
+}
+
+[data-theme="brown"] {
+    --accent-hsl: 20, 25%, 50%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(20, 25%, 60%);
+}
+
+[data-theme="sky"] {
+    --accent-hsl: 199, 89%, 48%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(199 89% 58%);
+}
+
+[data-theme="pink"] {
+    --accent-hsl: 327, 100%, 74%;
+    --accent-main: hsl(var(--accent-hsl));
+    --accent-hover: hsl(327 100% 84%);
+}
+
+/* 3. OPTIONAL THEME-MODE SPECIFIC OVERRIDES */
+/* Example: Midnight theme in dark mode wants a deeper blue background */
+[data-theme="midnight"][data-mode="dark"] {
+    --bg-main: hsl(222.2 84% 4.9%);
+    --bg-card: hsl(222.2 84% 8%);
+    --border-main: hsl(217.2 32.6% 17.5%);
+}
+
+/* Example: Paper-like theme (Amber override) */
+[data-theme="amber"][data-mode="light"] {
+    --bg-main: hsl(45 100% 96%);
+    --bg-card: hsl(45 100% 92%);
+    --border-main: hsl(45 100% 85%);
+}
+
+/* Utility for grid background */
+.bg-grid-pattern {
+    background-image: linear-gradient(to right, var(--border-main) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--border-main) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

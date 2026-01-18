@@ -1,0 +1,23 @@
+
+> temp_app@0.1.0 build F:\Career\Projects\Personal\book-it-bruh
+> next build
+
+▲ Next.js 16.1.3 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.8s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/page.tsx:53:32
+Type error: Property 'loading' does not exist on type 'AuthContextType'.
+
+[0m [90m 51 |[39m
+ [90m 52 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mHome[39m() {
+[31m[1m>[22m[39m[90m 53 |[39m   [36mconst[39m { currentUser[33m,[39m logout[33m,[39m loading[33m:[39m authLoading } [33m=[39m useAuth()[33m![39m[33m;[39m
+ [90m    |[39m                                [31m[1m^[22m[39m
+ [90m 54 |[39m
+ [90m 55 |[39m   [90m// 🔁 Bookmarks now come from Firestore[39m
+ [90m 56 |[39m   [36mconst[39m [bookmarks[33m,[39m setBookmarks] [33m=[39m useState[33m<[39m[33mBookmarkItem[39m[][33m>[39m([])[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null
+ ELIFECYCLE  Command failed with exit code 1.
