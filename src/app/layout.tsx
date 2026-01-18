@@ -10,8 +10,11 @@ const caviarDreams = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Book It Bruh",
+  title: "Canopy",
   description: "Organize your web with style.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
