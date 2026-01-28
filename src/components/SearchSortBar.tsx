@@ -9,7 +9,7 @@ interface SearchSortBarProps {
   onSortChange: (value: string) => void;
 }
 
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 function SearchSortBar({
   searchQuery,

@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${caviarDreams.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${caviarDreams.variable} antialiased`} suppressHydrationWarning>
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </AuthProvider>

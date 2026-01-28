@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
@@ -302,6 +304,11 @@ export default function Home() {
 
   const clearTags = () => setActiveTags([]);
 
+  // Check for invalid bookmarks (tags > 5)
+  const hasInvalidBookmarks = useMemo(() => {
+    return bookmarks.some((b) => (b.tags || []).length > 5);
+  }, [bookmarks]);
+
   // --- Render Logic ---
 
   if (authLoading) {
@@ -331,9 +338,18 @@ export default function Home() {
               <div className="flex-1 flex justify-between items-center">
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="px-4 py-2 bg-[var(--text-main)] text-[var(--bg-main)] text-sm font-bold rounded hover:bg-[var(--accent-main)] hover:text-white transition-colors"
+                  disabled={hasInvalidBookmarks}
+                  className={`px-4 py-2 text-sm font-bold rounded transition-colors ${hasInvalidBookmarks
+                      ? "bg-red-500/10 text-red-500 border border-red-500/20 cursor-not-allowed hover:bg-red-500/20"
+                      : "bg-[var(--text-main)] text-[var(--bg-main)] hover:bg-[var(--accent-main)] hover:text-white"
+                    }`}
+                  title={
+                    hasInvalidBookmarks
+                      ? "Please fix bookmarks with excessive tags (>5) before adding new ones."
+                      : "Add New Bookmark"
+                  }
                 >
-                  + Add Bookmark
+                  {hasInvalidBookmarks ? "⚠️ Fix Invalid Tags" : "+ Add Bookmark"}
                 </button>
               </div>
             </div>

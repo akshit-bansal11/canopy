@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Palette, Check, Sun, Moon } from "lucide-react";
+import { Palette, Sun, Moon } from "lucide-react";
 import { useTheme, Mode } from "@/components/providers/ThemeProvider";
 
 function ThemeSwitcher() {

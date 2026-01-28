@@ -85,7 +85,20 @@ function BookmarkForm({ onAddBookmark, allTags }: BookmarkFormProps) {
             </label>
             <TagInput
               value={tags}
-              onChange={setTags}
+              onChange={(val) => {
+                const parts = val.split(",");
+                // If more than 5 parts, it means user is trying to add a 6th tag (or just typed a 5th comma)
+                if (parts.length > 5) {
+                  if (!toast.visible) {
+                    setToast({
+                      visible: true,
+                      message: "You cannot add more than 5 tags.",
+                    });
+                  }
+                  return;
+                }
+                setTags(val);
+              }}
               tags={allTags}
               placeholder="dev, docs..."
               className="w-full rounded bg-[var(--bg-main)] border border-[var(--border-main)] px-3 py-2.5 text-sm text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-main)] focus:ring-1 focus:ring-[var(--accent-main)] transition-all"

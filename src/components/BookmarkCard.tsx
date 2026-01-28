@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
+import Image from "next/image";
 import TagInput from "./TagInput";
 
 interface BookmarkPayload {
@@ -82,12 +83,14 @@ function BookmarkCard({
   const [editTitle, setEditTitle] = useState(title || "");
   const [editDescription, setEditDescription] = useState(description || "");
   const [editTags, setEditTags] = useState((tags || []).join(", "));
+  const [imgError, setImgError] = useState(false);
 
-  useEffect(() => {
+  const handleStartEdit = () => {
     setEditTitle(title || "");
     setEditDescription(description || "");
     setEditTags((tags || []).join(", "));
-  }, [title, description, tags]);
+    setIsEditing(true);
+  };
 
   const handleSave = () => {
     const parsedTags = editTags
@@ -104,20 +107,28 @@ function BookmarkCard({
     setIsEditing(false);
   };
 
+  const isInvalid = (tags || []).length > 5;
+
   return (
-    <article className="group relative flex flex-col gap-3 rounded-md border border-[var(--border-main)] bg-[var(--bg-card)] p-4 transition-all hover:border-[var(--accent-main)] hover:shadow-lg hover:shadow-black/40">
+    <article
+      className={`group relative flex flex-col gap-3 rounded-md border p-4 transition-all hover:shadow-lg hover:shadow-black/40 ${isInvalid
+        ? "border-red-500 bg-red-500/10"
+        : "border-[var(--border-main)] bg-[var(--bg-card)] hover:border-[var(--accent-main)]"
+        }`}
+    >
       <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-[var(--accent-main)] opacity-0 transition-opacity group-hover:opacity-100" />
 
       <header className="flex items-start gap-3 pl-2">
         <div className="shrink-0 mt-0.5">
-          {faviconUrl ? (
-            <img
+          {faviconUrl && !imgError ? (
+            <Image
               src={faviconUrl}
               alt=""
+              width={20}
+              height={20}
               className="h-5 w-5 rounded-sm bg-white/10 grayscale group-hover:grayscale-0 transition-all"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
+              onError={() => setImgError(true)}
+              unoptimized
             />
           ) : (
             <div className="h-5 w-5 rounded-sm bg-[var(--bg-hover)]" />
@@ -211,7 +222,7 @@ function BookmarkCard({
       {!isEditing && (
         <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-[var(--bg-card)]/80 backdrop-blur-sm rounded p-1">
           <button
-            onClick={() => setIsEditing(true)}
+            onClick={handleStartEdit}
             className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-hover)] rounded"
           >
             <svg
